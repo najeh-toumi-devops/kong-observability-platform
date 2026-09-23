@@ -1,0 +1,6 @@
+- targets:
+    - 127.0.0.1:8007
+  labels:
+    environment: staging
+    cluster: kong-staging
+    instance_name: kong-stg-01

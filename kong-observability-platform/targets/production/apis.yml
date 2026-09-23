@@ -1,0 +1,6 @@
+- targets:
+    - https://example.com/health
+  labels:
+    environment: production
+    service: example-api
+    team: platform

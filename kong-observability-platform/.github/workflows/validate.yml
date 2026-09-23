@@ -1,0 +1,28 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate YAML
+        run: |
+          python3 - <<'PY'
+          import pathlib, yaml
+          for p in pathlib.Path(".").rglob("*.yml"):
+              with p.open() as f:
+                  yaml.safe_load(f)
+              print("OK", p)
+          PY
+
+      - name: Validate Grafana JSON
+        run: python3 -m json.tool config/grafana/dashboards/kong-overview.json >/dev/null
+
+      - name: Validate shell syntax
+        run: bash -n scripts/*.sh

@@ -1,0 +1,6 @@
+- targets:
+    - 127.0.0.1:8007
+  labels:
+    environment: production
+    cluster: kong-prod
+    instance_name: kong-01

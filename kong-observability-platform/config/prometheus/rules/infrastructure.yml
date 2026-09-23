@@ -1,0 +1,25 @@
+groups:
+  - name: infrastructure
+    rules:
+      - alert: NodeExporterUnavailable
+        expr: up{job="node"} == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Node Exporter unavailable
+          description: Linux host metrics are unavailable.
+
+      - alert: RootFilesystemAlmostFull
+        expr: |
+          (
+            node_filesystem_avail_bytes{mountpoint="/",fstype!~"tmpfs|overlay"}
+            /
+            node_filesystem_size_bytes{mountpoint="/",fstype!~"tmpfs|overlay"}
+          ) < 0.15
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Root filesystem almost full
+          description: Less than 15% of root filesystem space remains.

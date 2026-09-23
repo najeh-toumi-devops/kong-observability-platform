@@ -1,0 +1,20 @@
+groups:
+  - name: availability
+    rules:
+      - alert: BlackboxTargetDown
+        expr: probe_success == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: HTTP endpoint unavailable
+          description: Blackbox probe failed for {{ $labels.instance }}.
+
+      - alert: PostgreSQLExporterUnavailable
+        expr: up{job="postgres"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: PostgreSQL exporter unavailable
+          description: PostgreSQL monitoring is unavailable.

@@ -1,0 +1,7 @@
+[Unit]
+Description=Kong Observability Platform
+Wants=prometheus.service alertmanager.service grafana-server.service node_exporter.service blackbox_exporter.service postgres_exporter.service
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target

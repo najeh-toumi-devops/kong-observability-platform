@@ -1,0 +1,11 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: default
+
+receivers:
+  - name: default
+
+# Add Slack, email, Teams or webhook configuration here.
+# Never commit real credentials.

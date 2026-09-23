@@ -1,0 +1,25 @@
+groups:
+  - name: kong
+    rules:
+      - alert: KongMetricsUnavailable
+        expr: up{job="kong"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kong metrics unavailable
+          description: Prometheus cannot scrape Kong metrics.
+
+      - alert: KongHighErrorRate
+        expr: |
+          (
+            sum(rate(kong_http_requests_total{code=~"5.."}[5m]))
+            /
+            clamp_min(sum(rate(kong_http_requests_total[5m])), 1)
+          ) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Kong 5xx rate above 5 percent
+          description: Kong is returning more than 5% HTTP 5xx responses.

@@ -1,0 +1,21 @@
+# Secrets
+.env
+.env.*
+*.secret
+*.token
+*.password
+*.pem
+*.key
+
+# Runtime
+*.log
+*.pid
+
+# Local generated files
+tmp/
+dist/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
