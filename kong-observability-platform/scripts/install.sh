@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -82,26 +83,26 @@ install -d -o alertmanager -g alertmanager /etc/alertmanager /var/lib/alertmanag
 install -d -o blackbox_exporter -g blackbox_exporter /etc/blackbox_exporter
 install -d -o grafana -g grafana /var/lib/grafana/dashboards 2>/dev/null || true
 
-install -m 0644 config/prometheus/prometheus.yml /etc/prometheus/prometheus.yml
-install -m 0644 config/prometheus/rules/*.yml /etc/prometheus/rules/
+install -m 0644 /root/config/prometheus/prometheus.yml /etc/prometheus/prometheus.yml
+install -m 0644 /root/config/prometheus/rules/*.yml /etc/prometheus/rules/
 cp -a targets/. /etc/prometheus/targets/
 
 install -m 0644 config/blackbox/blackbox.yml /etc/blackbox_exporter/blackbox.yml
 
-install -m 0644 config/alertmanager/alertmanager.yml.example /etc/alertmanager/alertmanager.yml
+install -m 0644 /root/config/alertmanager/alertmanager.yml.example /etc/alertmanager/alertmanager.yml
 chown alertmanager:alertmanager /etc/alertmanager/alertmanager.yml
 
 install -d /etc/grafana/provisioning/datasources /etc/grafana/provisioning/dashboards
-install -m 0644 config/grafana/datasources/prometheus.yml /etc/grafana/provisioning/datasources/prometheus.yml
-install -m 0644 config/grafana/dashboards/dashboards.yml /etc/grafana/provisioning/dashboards/dashboards.yml
-install -m 0644 config/grafana/dashboards/kong-overview.json /var/lib/grafana/dashboards/kong-overview.json 2>/dev/null || true
+install -m 0644 /root/config/grafana/datasources/prometheus.yml /etc/grafana/provisioning/datasources/prometheus.yml
+install -m 0644 /root/config/grafana/dashboards/dashboards.yml /etc/grafana/provisioning/dashboards/dashboards.yml
+install -m 0644 /root/config/grafana/dashboards/kong-overview.json /var/lib/grafana/dashboards/kong-overview.json 2>/dev/null || true
 
-install -m 0644 systemd/prometheus.service /etc/systemd/system/prometheus.service
-install -m 0644 systemd/alertmanager.service /etc/systemd/system/alertmanager.service
-install -m 0644 systemd/kong-observability.target /etc/systemd/system/kong-observability.target
-install -m 0644 exporters/node/node_exporter.service /etc/systemd/system/node_exporter.service
-install -m 0644 exporters/blackbox/blackbox_exporter.service /etc/systemd/system/blackbox_exporter.service
-install -m 0644 exporters/postgres/postgres_exporter.service /etc/systemd/system/postgres_exporter.service
+install -m 0644 /root/systemd/prometheus.service /etc/systemd/system/prometheus.service
+install -m 0644 /root/systemd/alertmanager.service /etc/systemd/system/alertmanager.service
+install -m 0644 /root/systemd/kong-observability.target /etc/systemd/system/kong-observability.target
+install -m 0644 /root/exporters/node/node_exporter.service /etc/systemd/system/node_exporter.service
+install -m 0644 /root/exporters/blackbox/blackbox_exporter.service /etc/systemd/system/blackbox_exporter.service
+install -m 0644 /root/exporters/postgres/postgres_exporter.service /etc/systemd/system/postgres_exporter.service
 
 systemctl daemon-reload
 systemctl enable --now prometheus
